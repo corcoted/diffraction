@@ -138,6 +138,27 @@ def one_slit(slit_width, array_width, N):
 
     return U, x
 
+def two_slit(slit_width, slit_separation, array_width, N):
+    # TODO find a reasonable default for array_width
+    """Aperture function for a two slits.
+
+    Args:
+        slit_width (float): width of the slit in physical units
+        slit_separation (flost): distance between slit centers
+        array_width (float): width of the data array in physical units
+        N (int): number of points in the array
+
+    Returns:
+        U (array): array containing the slit aperture function values
+        x (array): array containing the position values
+    """
+
+    x = np.linspace(-array_width/2,array_width/2,N)
+    left = (np.abs(x+slit_separation/2.0) <= slit_width/2.0)*1.0
+    right = (np.abs(x-slit_separation/2.0) <= slit_width/2.0)*1.0
+    U = left+right
+    return U, x
+
 def estimate_width_1d(U,width):
     # estimates the effective aperture width
     N = len(U)
